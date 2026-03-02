@@ -5,10 +5,9 @@ interface Props {
 }
 
 const COLORS = [
-  'rgba(129,140,248,0.8)', 'rgba(167,139,250,0.8)', 'rgba(192,132,252,0.7)',
-  'rgba(232,121,249,0.7)', 'rgba(244,114,182,0.7)', 'rgba(251,113,133,0.7)',
-  'rgba(251,146,60,0.7)', 'rgba(250,204,21,0.7)', 'rgba(163,230,53,0.7)',
-  'rgba(52,211,153,0.7)', 'rgba(56,189,248,0.7)', 'rgba(99,102,241,0.7)',
+  '#6366f1', '#8b5cf6', '#a855f7', '#d946ef',
+  '#ec4899', '#f43f5e', '#f97316', '#eab308',
+  '#84cc16', '#10b981', '#06b6d4', '#3b82f6',
 ];
 
 export default function LanguagePieChart({ distribution }: Props) {
@@ -19,15 +18,15 @@ export default function LanguagePieChart({ distribution }: Props) {
   if (data.length === 0) {
     return (
       <div className="glass p-6">
-        <h3 className="text-white/70 text-sm font-medium mb-5">Languages</h3>
-        <p className="text-white/20 text-sm">No language data available</p>
+        <h3 className="text-slate-600 text-sm font-semibold mb-5">Languages</h3>
+        <p className="text-slate-300 text-sm">No language data available</p>
       </div>
     );
   }
 
   return (
     <div className="glass p-6">
-      <h3 className="text-white/70 text-sm font-medium mb-5">Languages</h3>
+      <h3 className="text-slate-600 text-sm font-semibold mb-5">Languages</h3>
       <div className="flex items-center gap-6">
         <div className="flex-shrink-0">
           <ResponsiveContainer width={200} height={200}>
@@ -40,35 +39,37 @@ export default function LanguagePieChart({ distribution }: Props) {
                 outerRadius={85}
                 paddingAngle={3}
                 dataKey="value"
-                stroke="none"
+                stroke="rgba(255,255,255,0.6)"
+                strokeWidth={2}
               >
                 {data.map((_entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} opacity={0.75} />
                 ))}
               </Pie>
               <Tooltip
                 contentStyle={{
-                  backgroundColor: 'rgba(15,15,25,0.9)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  borderRadius: '10px',
-                  backdropFilter: 'blur(12px)',
+                  backgroundColor: 'rgba(255,255,255,0.85)',
+                  border: '1px solid rgba(0,0,0,0.06)',
+                  borderRadius: '12px',
+                  backdropFilter: 'blur(16px)',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
                 }}
-                labelStyle={{ color: 'rgba(255,255,255,0.6)', fontSize: 12 }}
-                itemStyle={{ color: 'rgba(255,255,255,0.8)', fontSize: 12 }}
+                labelStyle={{ color: '#475569', fontSize: 12 }}
+                itemStyle={{ color: '#1e293b', fontSize: 12 }}
                 formatter={(value: number) => `${value.toFixed(1)}%`}
               />
             </PieChart>
           </ResponsiveContainer>
         </div>
-        <div className="flex-1 space-y-2">
+        <div className="flex-1 space-y-2.5">
           {data.slice(0, 6).map((lang, i) => (
             <div key={lang.name} className="flex items-center gap-2.5">
               <span
-                className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                className="w-2.5 h-2.5 rounded-full flex-shrink-0 shadow-sm"
                 style={{ backgroundColor: COLORS[i % COLORS.length] }}
               />
-              <span className="text-white/50 text-xs flex-1">{lang.name}</span>
-              <span className="text-white/30 text-xs tabular-nums">{lang.value.toFixed(1)}%</span>
+              <span className="text-slate-600 text-xs flex-1 font-medium">{lang.name}</span>
+              <span className="text-slate-400 text-xs tabular-nums">{lang.value.toFixed(1)}%</span>
             </div>
           ))}
         </div>
