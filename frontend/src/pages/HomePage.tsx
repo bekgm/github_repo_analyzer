@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { analyzeRepo } from '../api/client';
-import { Search, GitBranch, Loader2 } from 'lucide-react';
+import { Search, Loader2, ArrowRight, BarChart3, Brain, GitFork } from 'lucide-react';
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -31,60 +31,73 @@ export default function HomePage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh]">
-      <div className="text-center mb-10">
-        <GitBranch className="w-16 h-16 text-indigo-400 mx-auto mb-4" />
-        <h2 className="text-4xl font-bold text-white mb-3">
-          Analyze Any GitHub Repository
+    <div className="flex flex-col items-center justify-center min-h-[70vh]">
+      {/* Hero */}
+      <div className="text-center mb-12">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-sm text-xs text-white/50 mb-6">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-soft" />
+          Powered by Gemini AI
+        </div>
+        <h2 className="text-5xl font-bold text-gradient mb-4 leading-tight">
+          Analyze Any Repository
         </h2>
-        <p className="text-gray-400 text-lg max-w-xl mx-auto">
-          Get deep code metrics, contributor analytics, language breakdowns,
-          and AI-powered insights for any public repository.
+        <p className="text-white/40 text-lg max-w-md mx-auto font-light leading-relaxed">
+          Deep code metrics, contributor analytics, and AI-powered insights
+          for any public GitHub repo.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="w-full max-w-lg">
-        <div className="flex gap-2">
+      {/* Search */}
+      <form onSubmit={handleSubmit} className="w-full max-w-xl mb-16">
+        <div className="glass p-2 flex gap-2 glow-purple">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="owner/repo  (e.g. facebook/react)"
-              className="w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg
-                         text-white placeholder-gray-500 focus:outline-none focus:ring-2
-                         focus:ring-indigo-500 focus:border-transparent"
+              placeholder="owner/repo"
+              className="w-full pl-11 pr-4 py-3 bg-transparent text-white placeholder-white/25
+                         focus:outline-none text-sm"
               disabled={loading}
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-medium
-                       rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed
-                       flex items-center gap-2"
+            className="px-6 py-3 bg-indigo-500/80 hover:bg-indigo-500 text-white text-sm font-medium
+                       rounded-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed
+                       flex items-center gap-2 backdrop-blur"
           >
-            {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Analyze'}
+            {loading ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <>
+                Analyze
+                <ArrowRight className="w-3.5 h-3.5" />
+              </>
+            )}
           </button>
         </div>
         {error && (
-          <p className="mt-3 text-red-400 text-sm">{error}</p>
+          <p className="mt-3 text-red-400/80 text-xs text-center">{error}</p>
         )}
       </form>
 
-      <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-3xl">
+      {/* Feature cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl">
         {[
-          { title: 'Code Metrics', desc: 'Commit frequency, churn, bus factor' },
-          { title: 'Visualizations', desc: 'Heatmaps, charts, rankings' },
-          { title: 'AI Insights', desc: 'Project summary, architecture review' },
+          { icon: BarChart3, title: 'Code Metrics', desc: 'Commit frequency, churn, bus factor', color: 'text-blue-400/70' },
+          { icon: GitFork, title: 'Visualizations', desc: 'Charts, timelines, rankings', color: 'text-purple-400/70' },
+          { icon: Brain, title: 'AI Insights', desc: 'Summary, architecture & tech stack', color: 'text-emerald-400/70' },
         ].map((card) => (
           <div
             key={card.title}
-            className="p-5 bg-gray-900 border border-gray-800 rounded-xl text-center"
+            className="glass-sm glass-hover p-5 text-center"
           >
-            <h3 className="text-white font-semibold mb-1">{card.title}</h3>
-            <p className="text-gray-400 text-sm">{card.desc}</p>
+            <card.icon className={`w-5 h-5 ${card.color} mx-auto mb-3`} />
+            <h3 className="text-white/80 text-sm font-medium mb-1">{card.title}</h3>
+            <p className="text-white/30 text-xs">{card.desc}</p>
           </div>
         ))}
       </div>
