@@ -41,8 +41,8 @@ export default function AnalysisPage() {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="glass p-8 text-center max-w-sm">
-          <AlertCircle className="w-10 h-10 text-red-400/70 mx-auto mb-3" />
-          <p className="text-white/60 text-sm">{error}</p>
+          <AlertCircle className="w-10 h-10 text-red-400 mx-auto mb-3" />
+          <p className="text-slate-600 text-sm">{error}</p>
         </div>
       </div>
     );
@@ -52,8 +52,8 @@ export default function AnalysisPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh]">
         <div className="glass p-10 text-center">
-          <Loader2 className="w-8 h-8 text-indigo-400/60 animate-spin mx-auto mb-4" />
-          <p className="text-white/40 text-sm">
+          <Loader2 className="w-8 h-8 text-indigo-500 animate-spin mx-auto mb-4" />
+          <p className="text-slate-400 text-sm">
             {analysis?.status === 'in_progress'
               ? 'Analyzing repository...'
               : 'Loading analysis...'}
@@ -67,9 +67,9 @@ export default function AnalysisPage() {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="glass p-8 text-center max-w-sm">
-          <AlertCircle className="w-10 h-10 text-red-400/70 mx-auto mb-3" />
-          <p className="text-white/70 text-sm font-medium mb-1">Analysis failed</p>
-          <p className="text-white/30 text-xs">{analysis.error_message}</p>
+          <AlertCircle className="w-10 h-10 text-red-400 mx-auto mb-3" />
+          <p className="text-slate-700 text-sm font-medium mb-1">Analysis failed</p>
+          <p className="text-slate-400 text-xs">{analysis.error_message}</p>
         </div>
       </div>
     );
@@ -79,8 +79,8 @@ export default function AnalysisPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-semibold text-gradient mb-1">Analysis Results</h2>
-        <p className="text-white/30 text-sm">
+        <h2 className="text-2xl font-bold text-gradient mb-1">Analysis Results</h2>
+        <p className="text-slate-400 text-sm">
           {analysis.commits_count} commits &middot;{' '}
           {analysis.completed_at
             ? new Date(analysis.completed_at).toLocaleString()
