@@ -7,30 +7,44 @@ interface Props {
 
 export default function CommitFrequencyChart({ data }: Props) {
   return (
-    <div className="p-6 bg-gray-900 border border-gray-800 rounded-xl">
-      <h3 className="text-white font-semibold mb-4">Daily Commit Timeline</h3>
+    <div className="glass p-6">
+      <h3 className="text-white/70 text-sm font-medium mb-5">Daily Commits</h3>
       {data.length === 0 ? (
-        <p className="text-gray-500 text-sm">No commit data available.</p>
+        <p className="text-white/20 text-sm">No commit data available.</p>
       ) : (
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={280}>
           <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
             <XAxis
               dataKey="date"
-              stroke="#9ca3af"
-              tick={{ fontSize: 11 }}
+              stroke="rgba(255,255,255,0.15)"
+              tick={{ fontSize: 10, fill: 'rgba(255,255,255,0.3)' }}
               interval={data.length > 20 ? Math.floor(data.length / 10) : 0}
               angle={-45}
               textAnchor="end"
-              height={60}
+              height={55}
+              tickLine={false}
+              axisLine={false}
             />
-            <YAxis stroke="#9ca3af" allowDecimals={false} />
+            <YAxis
+              stroke="rgba(255,255,255,0.15)"
+              tick={{ fontSize: 10, fill: 'rgba(255,255,255,0.3)' }}
+              allowDecimals={false}
+              tickLine={false}
+              axisLine={false}
+            />
             <Tooltip
-              contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151' }}
-              labelStyle={{ color: '#fff' }}
-              formatter={(value: number) => [`${value} commits`, 'Commits']}
+              contentStyle={{
+                backgroundColor: 'rgba(15,15,25,0.9)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                borderRadius: '10px',
+                backdropFilter: 'blur(12px)',
+              }}
+              labelStyle={{ color: 'rgba(255,255,255,0.6)', fontSize: 12 }}
+              itemStyle={{ color: 'rgba(255,255,255,0.8)', fontSize: 12 }}
+              formatter={(value: number) => [`${value}`, 'Commits']}
             />
-            <Bar dataKey="commits" fill="#6366f1" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="commits" fill="rgba(129,140,248,0.6)" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       )}

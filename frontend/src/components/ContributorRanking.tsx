@@ -9,27 +9,31 @@ export default function ContributorRanking({ contributors }: Props) {
   const maxCommits = sorted[0]?.total_commits || 1;
 
   return (
-    <div className="p-6 bg-gray-900 border border-gray-800 rounded-xl">
-      <h3 className="text-white font-semibold mb-4">
-        Top Contributors ({contributors.length})
+    <div className="glass p-6">
+      <h3 className="text-white/70 text-sm font-medium mb-5">
+        Contributors
+        <span className="text-white/20 ml-2 font-normal">{contributors.length}</span>
       </h3>
       <div className="space-y-3">
         {sorted.slice(0, 15).map((c, index) => (
           <div key={c.username + index} className="flex items-center gap-3">
-            <span className="text-gray-500 text-sm w-6 text-right">
-              #{index + 1}
+            <span className="text-white/15 text-xs w-5 text-right font-mono">
+              {index + 1}
             </span>
-            <div className="flex-1">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-white text-sm font-medium">{c.username}</span>
-                <span className="text-gray-400 text-xs">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-white/70 text-sm font-medium truncate">{c.username}</span>
+                <span className="text-white/25 text-xs flex-shrink-0 ml-3 tabular-nums">
                   {c.total_commits} commits &middot; +{c.additions.toLocaleString()} -{c.deletions.toLocaleString()}
                 </span>
               </div>
-              <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
+              <div className="h-1 bg-white/[0.04] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-indigo-500 rounded-full transition-all"
-                  style={{ width: `${(c.total_commits / maxCommits) * 100}%` }}
+                  className="h-full rounded-full transition-all duration-500"
+                  style={{
+                    width: `${(c.total_commits / maxCommits) * 100}%`,
+                    background: 'linear-gradient(90deg, rgba(129,140,248,0.5), rgba(167,139,250,0.3))',
+                  }}
                 />
               </div>
             </div>
